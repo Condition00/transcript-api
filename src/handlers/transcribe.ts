@@ -3,6 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
 
+type flaskResponseType = {
+    transcript: string;
+}
+
 export const handleTranscription: RequestHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const file = req.file as Express.Multer.File;
 
@@ -13,20 +17,18 @@ export const handleTranscription: RequestHandler = async (req: Request, res: Res
 
     try {
         const audioPath = path.resolve(file.path);
-        // const audioBase64 = fs.readFileSync(audioPath, { encoding: 'base64' });
+        const audioBase64 = fs.readFileSync(audioPath, { encoding: 'base64' });
 
-        // // transcription via whisper-tiny
+        const flaskResponse = await axios.post<flaskResponseType>('http://localhost:5000/transcribe', {
+            audio: audioBase64,
+        });
 
-        // const whisperResponse = await axios.post('http://localhost:11434/api/generate',{
-        //     model: 'whisper-tiny',
-        //     audio: audioBase64,
-        // });
+        const { transcript } = flaskResponse.data
 
         // const transcript = whisperResponse.data || '[No transcript returned]';
 
         //ph
-        const transcript = "Sample Transcript output";
-        const summary = "Sample Summary output";
+        const summary = "Sample Summary coming soon!";
         const actionItems = ["Task 1", "Task 2", "Task 3"];
 
 
