@@ -13,18 +13,19 @@ export const handleTranscription: RequestHandler = async (req: Request, res: Res
 
     try {
         const audioPath = path.resolve(file.path);
-        const audioBase64 = fs.readFileSync(audioPath, { encoding: 'base64' });
+        // const audioBase64 = fs.readFileSync(audioPath, { encoding: 'base64' });
 
-        // transcription via whisper-tiny
+        // // transcription via whisper-tiny
 
-        const whisperResponse = await axios.post('http://localhost:11434/api/generate',{
-            model: 'whisper-tiny',
-            audio: audioBase64,
-        });
+        // const whisperResponse = await axios.post('http://localhost:11434/api/generate',{
+        //     model: 'whisper-tiny',
+        //     audio: audioBase64,
+        // });
 
-        const transcript = whisperResponse.data || '[No transcript returned]';
+        // const transcript = whisperResponse.data || '[No transcript returned]';
 
         //ph
+        const transcript = "Sample Transcript output";
         const summary = "Sample Summary output";
         const actionItems = ["Task 1", "Task 2", "Task 3"];
 
