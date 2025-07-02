@@ -4,9 +4,7 @@ import base64
 import os
 
 app = Flask(__name__)
-
-# Load GPU-accelerated Whisper model
-model = WhisperModel("base", compute_type="float16")
+model = WhisperModel("base", device="cpu", compute_type="int8") # currently cpu (have to default it to gpu)
 
 @app.route("/")
 def home():

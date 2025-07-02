@@ -25,8 +25,6 @@ export const handleTranscription: RequestHandler = async (req: Request, res: Res
 
         const { transcript } = flaskResponse.data
 
-        // const transcript = whisperResponse.data || '[No transcript returned]';
-
         //ph
         const summary = "Sample Summary coming soon!";
         const actionItems = ["Task 1", "Task 2", "Task 3"];
