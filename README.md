@@ -59,7 +59,7 @@ npm start
 
 ## Technologies Used
 
-- **Frontend:** TypeScript, Express.js, Multer (file uploads)
+- **Frontend:** TypeScript, Express.js, Multer
 - **Backend:** Python, Faster Whisper
 - **Build Tools:** TypeScript compiler, nodemon
 
