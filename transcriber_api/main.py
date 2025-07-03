@@ -66,7 +66,7 @@ def transcribe():
     gemini_response = gemini_model.generate_content(prompt)
 
 
-    #parsing the response idk have to make it strict some eroors
+    #parsing the response idk have to make it strict some eroors (fixed working fine)
     import json
     import re
 
