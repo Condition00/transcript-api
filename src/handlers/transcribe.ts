@@ -5,6 +5,8 @@ import axios from 'axios';
 
 type flaskResponseType = {
     transcript: string;
+    summary: string;
+    actionItems: string[];
 }
 
 export const handleTranscription: RequestHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -24,10 +26,11 @@ export const handleTranscription: RequestHandler = async (req: Request, res: Res
         });
 
         const { transcript } = flaskResponse.data
+        const { summary, actionItems } = flaskResponse.data;
 
         //ph
-        const summary = "Sample Summary coming soon!";
-        const actionItems = ["Task 1", "Task 2", "Task 3"];
+        // const summary = "Sample Summary coming soon!";
+        // const actionItems = ["Task 1", "Task 2", "Task 3"];
 
 
         fs.unlinkSync(audioPath);
