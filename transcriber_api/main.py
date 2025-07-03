@@ -41,30 +41,54 @@ def transcribe():
     # Gemini for summarization
 
     prompt = f"""
-    Transcript:
-    {transcription}
+    You are a helpful assistant.
 
-    Now:
-    1. Summarize the conversation.
-    2. Extract action items as a JSON list.
-    Respond in JSON format:
+    Here is the transcript of a conversation:
+
+    \"\"\"
+    {transcription}
+    \"\"\"
+
+    Please do the following:
+    1. Provide a concise summary.
+    2. List clear and actionable next steps as action items.
+
+    Respond **ONLY in this exact JSON format**:
+
     {{
-    "summary": "<summary here>",
-    "actionItems": ["<item 1>", "<item 2>", "..."]
+    "summary": "<summary>",
+    "actionItems": ["<action item 1>", "<action item 2>", "..."]
     }}
+
+    No commentary, no markdown, no formatting — just raw JSON.
     """
 
     gemini_response = gemini_model.generate_content(prompt)
 
-    #parsing the response
+
+    #parsing the response idk have to make it strict some eroors
     import json
-    try:
-        parsed = json.loads(gemini_response.text)
-        summary = parsed.get("summary", "")
-        action_items = parsed.get("actionItems", [])
-    except Exception as err:
-        print("Failed to parse Gemini response:", err)
-        summary = "Failed to summarize"
+    import re
+
+    # clear accidental newlines
+    raw_text = gemini_response.text.strip()
+
+    # Try to extract the first {...} block (if Gemini wrapped it in explanation) (idk gpt does this)
+    match = re.search(r'\{.*\}', raw_text, re.DOTALL)
+
+    # json logic
+    if match:
+        try:
+            parsed = json.loads(match.group())
+            summary = parsed.get("summary", "")
+            action_items = parsed.get("actionItems", [])
+        except Exception as err:
+            print("❌ Failed to parse cleaned JSON:", err)
+            summary = "Summary not generated"
+            action_items = []
+    else:
+        print("❌ No valid JSON found in response")
+        summary = "Summary not generated"
         action_items = []
 
     # Clean up
