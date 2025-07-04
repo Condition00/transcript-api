@@ -2,6 +2,7 @@ import { NextFunction, Request, RequestHandler, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
+import { config } from '../config/env';
 
 type flaskResponseType = {
     transcript: string;
@@ -22,7 +23,7 @@ export const handleTranscription: RequestHandler = async (req: Request, res: Res
         const audioPath = path.resolve(file.path);
         const audioBase64 = fs.readFileSync(audioPath, { encoding: 'base64' });
 
-        const flaskResponse = await axios.post<flaskResponseType>('http://localhost:5000/transcribe', {
+        const flaskResponse = await axios.post<flaskResponseType>(`${config.flaskApiUrl}/transcribe`, {
             audio: audioBase64,
         });
 
@@ -34,7 +35,12 @@ export const handleTranscription: RequestHandler = async (req: Request, res: Res
         // const actionItems = ["Task 1", "Task 2", "Task 3"];
 
 
-        fs.unlinkSync(audioPath);
+        // Clean up uploaded file
+        try {
+            fs.unlinkSync(audioPath);
+        } catch (cleanupError) {
+            console.warn('Failed to delete uploaded file:', cleanupError);
+        }
 
         res.json({
             transcript,
