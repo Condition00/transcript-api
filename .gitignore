@@ -89,3 +89,5 @@ test-audio.*
 *.test.wav
 *.test.mp3
 *.test.mp4
+
+/src/generated/prisma
