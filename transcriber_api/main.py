@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-gemini_model = genai.GenerativeModel("gemini-2.0-flash-001")
+gemini_model = genai.GenerativeModel("gemini-2.0-flash-001") 
 
 
 app = Flask(__name__)
@@ -16,7 +16,7 @@ model = WhisperModel("base", device="cpu", compute_type="int8") # currently cpu 
 
 @app.route("/")
 def home():
-    return "Transcription API is running ✅"
+    return "Transcription service is running"
 
 @app.route("/transcribe", methods=["POST"])
 def transcribe():
@@ -38,8 +38,7 @@ def transcribe():
     for segment in segments:
         transcription += segment.text + " "
 
-    # Gemini for summarization
-
+    # Gemini for summarization and action Items. (I have to add confidence logic)
     prompt = f"""
     You are a helpful assistant.
 
