@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: transcript-api-server
+    env: node
+    plan: free # or free if available
+    region: oregon  # choose region closest to your users
+    buildCommand: |
+      npm ci
+      npm run build
+      npx prisma generate
+      npx prisma migrate deploy
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GEMINI_API_KEY
+        sync: false  # Set this in Render dashboard for security
+      - key: DATABASE_URL
+        value: postgresql://zero:Xzjb11WipffZDJcGbet6Ey6SSElw7mJb@dpg-d1k0ti6mcj7s73agge8g-a/tdb_j9kk
+      - key: PORT
+        value: "10000"  # Render uses port 10000 by default
+    healthCheckPath: /health  # Add if you have a health endpoint
+    autoDeploy: true
+
+  - type: web
+    name: transcriber-api
+    env: python3.11
+    plan: free  # or free if available
+    region: oregon  # keep same region as main API
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: python transcriber_api/main.py
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: GEMINI_API_KEY
+        sync: false  # Set this in Render dashboard for security
+      - key: DATABASE_URL
+        value: postgresql://zero:Xzjb11WipffZDJcGbet6Ey6SSElw7mJb@dpg-d1k0ti6mcj7s73agge8g-a/tdb_j9kk
+      - key: PORT
+        value: "10000"
+    healthCheckPath: /  # Your home route returns status
+    autoDeploy: true
