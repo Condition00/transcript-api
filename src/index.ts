@@ -12,6 +12,10 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/transcribe", transcribeRouter);
 
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
 app.listen(config.port, () => {
   console.log(`Running on ${config.port}`);
 });
