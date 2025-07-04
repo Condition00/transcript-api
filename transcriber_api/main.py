@@ -38,7 +38,7 @@ def transcribe():
     confidence_scores = []
     for segment in segments:
         transcription += segment.text + " "
-        # confidence logic
+        # confidence logic (I used no_speech_prob by faster-whisper for confidence)
         if segment.no_speech_prob is not None:
             confidence_scores.append(1.0 - segment.no_speech_prob)
 

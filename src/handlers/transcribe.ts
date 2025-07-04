@@ -7,6 +7,7 @@ type flaskResponseType = {
     transcript: string;
     summary: string;
     actionItems: string[];
+    confidence: number;
 }
 
 export const handleTranscription: RequestHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -26,7 +27,7 @@ export const handleTranscription: RequestHandler = async (req: Request, res: Res
         });
 
         const { transcript } = flaskResponse.data
-        const { summary, actionItems } = flaskResponse.data;
+        const { summary, actionItems, confidence } = flaskResponse.data;
 
         //ph
         // const summary = "Sample Summary coming soon!";
@@ -39,7 +40,7 @@ export const handleTranscription: RequestHandler = async (req: Request, res: Res
             transcript,
             summary,
             actionItems: actionItems,
-            confidence: 0.95,
+            confidence: confidence,
         });
     } catch (err) {
         console.error('Error processing file:', err);
