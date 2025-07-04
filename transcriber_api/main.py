@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-gemini_model = genai.GenerativeModel("gemini-2.0-flash-001") 
+gemini_model = genai.GenerativeModel("gemini-2.0-flash-001")
 
 
 app = Flask(__name__)
@@ -35,8 +35,15 @@ def transcribe():
     segments, _ = model.transcribe(audio_path)
 
     transcription = ""
+    confidence_scores = []
     for segment in segments:
         transcription += segment.text + " "
+        # confidence logic
+        if segment.no_speech_prob is not None:
+            confidence_scores.append(1.0 - segment.no_speech_prob)
+
+    # average confidence
+    avg_confidence = round(sum(confidence_scores)/len(confidence_scores), 3) if confidence_scores else 0.0
 
     # Gemini for summarization and action Items. (I have to add confidence logic)
     prompt = f"""
@@ -95,7 +102,8 @@ def transcribe():
 
     return jsonify({"transcript": transcription.strip(),
                     "summary": summary.strip(),
-                    "actionItems": action_items
+                    "actionItems": action_items,
+                    "confidence": avg_confidence
     })
 
 if __name__ == "__main__":
