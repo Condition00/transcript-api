@@ -2,20 +2,6 @@
 
 A TypeScript/Node.js API for audio transcription using Faster Whisper, with Express and Python backend integration.
 
-## Features
-
-- Audio file upload and transcription
-- RESTful API endpoints
-- TypeScript with Express.js frontend
-- Python backend with Faster Whisper for transcription
-- Support for multiple audio formats
-
-## Prerequisites
-
-- Node.js (v16 or higher)
-- Python (v3.8 or higher)
-- npm or yarn
-
 ## Installation
 
 1. Clone the repository:
@@ -33,8 +19,6 @@ npm install
 ```bash
 pip install -r requirements.txt
 ```
-
-## Usage
 
 ### Development
 
@@ -59,9 +43,8 @@ npm start
 
 ## Technologies Used
 
-- **Frontend:** TypeScript, Express.js, Multer
-- **Backend:** Python, Faster Whisper
-- **Build Tools:** TypeScript compiler, nodemon
+- **Backend:** Express.js, Flask, Multer, Faster Whisper, gemini-2.0-flash
+- **Build:** TypeScript, Python 
 
 ## License
 
