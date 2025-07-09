@@ -1,6 +1,6 @@
 # Transcript API
 
-A TypeScript/Node.js API for audio transcription using Faster Whisper, with Express and Python backend integration.
+A TypeScript/Node.js API for audio transcription using Faster Whisper and gemini summarizations, with Express and Python backend integration.
 
 ## Installation
 
