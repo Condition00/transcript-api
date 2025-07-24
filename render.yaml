@@ -16,7 +16,7 @@ services:
       - key: GEMINI_API_KEY
         sync: false  # Set this in Render dashboard for security
       - key: DATABASE_URL
-        value: postgresql://zero:Xzjb11WipffZDJcGbet6Ey6SSElw7mJb@dpg-d1k0ti6mcj7s73agge8g-a/tdb_j9kk
+        value: 
       - key: PORT
         value: "10000"  # Render uses port 10000 by default
     healthCheckPath: /health  # Add if you have a health endpoint
@@ -37,7 +37,7 @@ services:
       - key: GEMINI_API_KEY
         sync: false  # Set this in Render dashboard for security
       - key: DATABASE_URL
-        value: postgresql://zero:Xzjb11WipffZDJcGbet6Ey6SSElw7mJb@dpg-d1k0ti6mcj7s73agge8g-a/tdb_j9kk
+        value: 
       - key: PORT
         value: "10000"
     healthCheckPath: /  # Your home route returns status
